@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+	<title>Add Musics</title>
+</h:head>
+<h:body>
+	<ui:composition
+		template="/resources/template/common/commonLayout.xhtml">
+		<ui:define name="header">My Musics</ui:define>
+		<ui:define name="content">
+			<h:form>
+				<p>Musics by user #{userInput.getName()}:</p>
+				<div class="tablebox">
+
+					<h:dataTable id="listamensagens" var="list"
+						value="#{userInput.listmymusics()}">
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Name" />
+							</f:facet>
+							<h:outputText value="#{list.title}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Artist" />
+							</f:facet>
+							<h:outputText value="#{list.artist}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Album" />
+							</f:facet>
+							<h:outputText value="#{list.album}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Year" />
+							</f:facet>
+							<h:outputText value="#{list.year}" />
+						</h:column>
+						<h:column>
+							<h:commandButton class="btnTabs" value="Edit Music"
+								action="#{render.showTable(list.idMusic)}" />
+						</h:column>
+						<h:column>
+							<h:commandButton class="btnTabs" value="Delete from DataBase"
+								action="#{changeMusic.deleteMusic(list.idMusic)}" />
+						</h:column>
+					</h:dataTable>
+
+				</div>
+				<div id="all" style="margin-top: 20px; width: 30%;">
+					<h:panelGroup rendered="#{render.tableShow}">
+
+						<div class="row"
+							style="width: 30%; margin-top: 20px; text-align: center; display: inline;">
+							<h4>Change the next fields</h4>
+
+							<h:panelGrid class="panelGrid" columns="2" layout="grid">
+								<h:outputText value="Title" />
+								<h:inputText value="#{changeMusic.title}" />
+								<h:outputText value="Artist" />
+								<h:inputText value="#{changeMusic.artist}" />
+								<h:outputText value="Album" />
+								<h:inputText value="#{changeMusic.album}" />
+								<h:outputText value="Year" />
+								<h:inputText maxlength="4" value="#{changeMusic.year}" />
+
+
+								<h:commandButton class="btnContent" value="Clear" type="reset" />
+								<h:commandButton class="btnContent" value="Submit Changes"
+									action="#{changeMusic.changeMusic()}" />
+							</h:panelGrid>
+						</div>
+					</h:panelGroup>
+				</div>
+			</h:form>
+			<div class="messageColor">
+				<br />
+				<h:messages showSummary="true" showDetail="false"
+					errorStyle="color:red" infoStyle="color:blue" />
+			</div>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
