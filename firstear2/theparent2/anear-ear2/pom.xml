@@ -25,6 +25,13 @@
 			<version>${project.version}</version>
 			<type>ejb</type>
 		</dependency>
+		<!-- adding the ws ! -->
+		<dependency>
+			<groupId>dei.uc.pt.ar.paj</groupId>
+			<artifactId>thews-ws2</artifactId>
+			<version>${project.version}</version>
+			<type>war</type>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -47,6 +54,10 @@
 							<groupId>dei.uc.pt.ar.paj</groupId>
 							<artifactId>aservice-services2</artifactId>
 						</ejbModule>
+						<webModule>
+							<groupId>dei.uc.pt.ar.paj</groupId>
+							<artifactId>thews-ws2</artifactId>
+						</webModule>
 					</modules>
 				</configuration>
 			</plugin>

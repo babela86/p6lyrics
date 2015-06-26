@@ -37,14 +37,14 @@ public class PlaylistDAO {
 		return (ArrayList<Playlist>) em
 				.createQuery(
 						"SELECT p FROM Playlist p WHERE p.utilizador.idUtilizador = :id")
-				.setParameter("id", id).getResultList();
+						.setParameter("id", id).getResultList();
 	}
 
 	public Playlist getPlaylist(int idPlay) {
 		return (Playlist) em
 				.createQuery(
 						"SELECT p FROM Playlist p WHERE p.idPlaylist = :idplay")
-				.setParameter("idplay", idPlay).getSingleResult();
+						.setParameter("idplay", idPlay).getSingleResult();
 
 	}
 
@@ -52,7 +52,7 @@ public class PlaylistDAO {
 		return (String) em
 				.createQuery(
 						"select p.name from Playlist p where p.idPlaylist = :idplay")
-				.setParameter("idplay", idPlay).getSingleResult();
+						.setParameter("idplay", idPlay).getSingleResult();
 
 	}
 
@@ -77,8 +77,8 @@ public class PlaylistDAO {
 		try {
 			@SuppressWarnings("unchecked")
 			ArrayList<Playlist> lista = (ArrayList<Playlist>) em
-					.createQuery(
-							"SELECT p FROM Playlist p WHERE p.idPlaylist = :id")
+			.createQuery(
+					"SELECT p FROM Playlist p WHERE p.idPlaylist = :id")
 					.setParameter("id", idPlay).getResultList();
 			for (Playlist p : lista) {
 				em.remove(em.merge(p));
@@ -104,4 +104,8 @@ public class PlaylistDAO {
 		// }
 	}
 
+	public int sizePlaylist(int idPlay) {
+		return (int) em.createQuery("COUNT ...").setParameter("id", idPlay)
+				.getSingleResult();
+	}
 }
