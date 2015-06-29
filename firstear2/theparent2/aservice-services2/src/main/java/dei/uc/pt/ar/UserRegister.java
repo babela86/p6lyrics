@@ -70,7 +70,7 @@ public class UserRegister {
 			
 			//Added by JPM
 			//adiciona role associada ao user
-			Roles newRole = new Roles("ADMIN", u);
+			Roles newRole = new Roles("P6AUTHORIZED", u);
 	    	em.persist( newRole );
 
 	    	result = "User added to DB";

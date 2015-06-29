@@ -35,9 +35,9 @@
     </login-config>
     
     <security-constraint>
-        <display-name>Admin Pages</display-name>
+        <display-name>Authorized Pages</display-name>
         <web-resource-collection>
-            <web-resource-name>Protected Admin Area</web-resource-name>
+            <web-resource-name>Protected Authorized Area</web-resource-name>
             <description></description>
             <url-pattern>/resources/Authorized/*</url-pattern>
             <http-method>GET</http-method>
@@ -50,7 +50,7 @@
         </web-resource-collection>
         <auth-constraint>
             <description/>
-            <role-name>ADMIN</role-name>
+            <role-name>P6AUTHORIZED</role-name>
         </auth-constraint>
         <user-data-constraint>
             <transport-guarantee>NONE</transport-guarantee>  <!-- Passar a confidential -->
@@ -58,7 +58,7 @@
     </security-constraint>
     
 	<security-role>  
-		<role-name>ADMIN</role-name>  
+		<role-name>P6AUTHORIZED</role-name>  
 	</security-role>  
 	
 </web-app>

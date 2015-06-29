@@ -116,7 +116,7 @@ public class Populate implements Serializable {
 		//Added by JPM
 		Roles newRole;
 		for (Utilizador u : users) {
-			newRole = new Roles("ADMIN", u);
+			newRole = new Roles("P6AUTHORIZED", u);
 	    	em.persist( newRole );
 		}
 
