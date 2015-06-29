@@ -9,10 +9,13 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.spi.Context;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @SessionScoped
@@ -88,8 +91,19 @@ public class UserInput implements Serializable {
 			msg.setSeverity(FacesMessage.SEVERITY_ERROR);
 			if (FacesContext.getCurrentInstance() != null)
 				FacesContext.getCurrentInstance().addMessage(null, msg);
-			return "login";
+			return "/index";
 		} else {
+			//Added by JPM
+			FacesContext context = FacesContext.getCurrentInstance();
+			HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest(); 
+			try {
+				request.login(this.email, this.pass);
+			} catch (ServletException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return "/index";
+			}
+
 			this.activeUser = util;
 			this.name = activeUser.getName();
 			startSession();
@@ -99,6 +113,17 @@ public class UserInput implements Serializable {
 	}
 
 	public String logoutUser() {
+		//Added by JPM
+		FacesContext context = FacesContext.getCurrentInstance();
+		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+		try {
+			request.logout();
+		} catch (ServletException e) {
+			// TODO Auto-generated catch block
+			context.addMessage(null, new FacesMessage("Logout failed."));
+			//e.printStackTrace();
+		}
+		
 		this.activeUser = null;
 		this.day = "";
 		this.year = "";
@@ -110,7 +135,7 @@ public class UserInput implements Serializable {
 		if (FacesContext.getCurrentInstance() != null)
 			FacesContext.getCurrentInstance().getExternalContext()
 			.invalidateSession();
-		return "/login.xhtml?faces-redirect=true";
+		return "/index.xhtml?faces-redirect=true";
 	}
 
 	public ArrayList<Musica> listallmusics() {

@@ -1,0 +1,3 @@
+<jboss-web>
+    <security-domain>p6lyricsDomain</security-domain>
+</jboss-web>

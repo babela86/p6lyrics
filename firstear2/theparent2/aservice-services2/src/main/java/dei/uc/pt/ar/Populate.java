@@ -108,9 +108,17 @@ public class Populate implements Serializable {
 		plays[2].addMusica(musics[13]);
 		plays[1].addMusica(musics[14]);
 		plays[0].addMusica(musics[15]);
-
-		for (Utilizador u : users)
+		
+		
+		for (Utilizador u : users) 
 			em.persist(u);
+		
+		//Added by JPM
+		Roles newRole;
+		for (Utilizador u : users) {
+			newRole = new Roles("ADMIN", u);
+	    	em.persist( newRole );
+		}
 
 		for (Playlist p : plays)
 			em.persist(p);

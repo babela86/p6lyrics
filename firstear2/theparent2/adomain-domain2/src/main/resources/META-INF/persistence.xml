@@ -4,12 +4,13 @@
 	<persistence-unit name="Playlist" transaction-type="JTA">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<jta-data-source>java:jboss/datasources/p6lyrics</jta-data-source>
-	<class>dei.uc.pt.ar.Utilizador</class>
-	<class>dei.uc.pt.ar.Musica</class>
+		<class>dei.uc.pt.ar.Utilizador</class>
+		<class>dei.uc.pt.ar.Musica</class>
 		<class>dei.uc.pt.ar.Playlist</class>
+		<class>dei.uc.pt.ar.Roles</class>
 
 		<properties>
-											
+
 			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
 			<property name="hibernate.hbm2ddl.auto" value="create" />
 
