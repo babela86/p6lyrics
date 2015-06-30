@@ -55,6 +55,20 @@ public class UserDAO {
 			return false;
 		}
 	}
+	
+	public boolean changePassword(String password, int userid) {
+		try {
+			q = em.createQuery("UPDATE Utilizador SET password =:password WHERE idUtilizador = :IdUtilAtivo");
+			q.setParameter("IdUtilAtivo", userid );
+			q.setParameter("password", password);
+			q.executeUpdate();
+			log.info("Password alterada");
+			return true;
+		} catch (Exception e) {
+			log.error("Erro ao alterar Password!");
+			return false;
+		}
+	}
 
 	public boolean deleteAccount(Utilizador uact) {
 		try {
@@ -70,6 +84,32 @@ public class UserDAO {
 				em.remove(em.merge(p));
 			}
 			em.remove(em.merge(uact));
+			log.info("Dados da conta apagados!");
+			return true;
+		} catch (Exception e) {
+			log.error("Problema ao apagar dados da conta!");
+			return false;
+		}
+	}
+	
+	public boolean deleteAccountByUserID(int userid) {
+		try {
+			q = em.createQuery("UPDATE Musica m SET m.utilizador =1 WHERE m.id_util =:userid");
+			q.setParameter("userid", userid);
+			q.executeUpdate();
+			@SuppressWarnings("unchecked")
+			ArrayList<Playlist> lista = (ArrayList<Playlist>) em.createQuery(
+				"SELECT p FROM Playlist p WHERE p.utilizador.idUtilizador = :id")
+				.setParameter("id", userid);
+			for (Playlist p : lista) {
+				em.remove(em.merge(p));
+			}
+
+			Utilizador uact = (Utilizador) em.createQuery(
+				"SELECT u FROM Utilizador u WHERE u.idUtilizador = :id")
+				.setParameter("id", userid);
+			em.remove(em.merge(uact));
+			
 			log.info("Dados da conta apagados!");
 			return true;
 		} catch (Exception e) {

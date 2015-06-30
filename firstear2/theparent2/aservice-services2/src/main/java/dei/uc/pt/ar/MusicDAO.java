@@ -200,8 +200,7 @@ public class MusicDAO {
 	public boolean changeMusic(Musica m, int idMusic) {
 		try {
 
-			query = em
-					.createQuery("UPDATE Musica m SET m.title =:title, m.album =:album, m.artist =:artist, m.year =:year WHERE m.idMusic = :idMusic");
+			query = em.createQuery("UPDATE Musica m SET m.title =:title, m.album =:album, m.artist =:artist, m.year =:year WHERE m.idMusic = :idMusic");
 			query.setParameter("title", m.getTitle());
 			query.setParameter("album", m.getAlbum());
 			query.setParameter("artist", m.getArtist());

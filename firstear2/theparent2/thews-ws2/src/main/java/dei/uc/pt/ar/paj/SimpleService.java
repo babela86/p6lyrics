@@ -1,4 +1,4 @@
-package dei.uc.pt.ar.paj.wserver.core;
+package dei.uc.pt.ar.paj;
 
 import javax.ejb.Stateless;
 import javax.ws.rs.GET;

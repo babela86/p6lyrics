@@ -1,4 +1,4 @@
-package dei.uc.pt.ar.paj.wserver.core;
+package dei.uc.pt.ar.paj;
 
 import java.util.Set;
 
@@ -24,6 +24,9 @@ public class ApplicationConfig extends Application{
 	    // resources.add(xpto.class);
 		resources.add(SimpleService.class);
 		resources.add(SimpleUserService.class);
+		resources.add(SimpleMusicService.class);
+		resources.add(SimplePlaylistService.class);
+
 	}
 	
 }

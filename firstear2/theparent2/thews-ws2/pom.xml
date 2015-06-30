@@ -18,6 +18,7 @@
 	</build>
 
 	<dependencies>
+	
 		<dependency>
 			<groupId>javax</groupId>
 			<artifactId>javaee-api</artifactId>
@@ -25,11 +26,10 @@
 		
 		<dependency>
 			<groupId>dei.uc.pt.ar.paj</groupId>
-			<artifactId>adomain-domain2</artifactId>
+			<artifactId>aservice-services2</artifactId>
 			<version>${project.version}</version>
 			<scope>provided</scope>
 		</dependency>
-
 
 	</dependencies>
 </project>
