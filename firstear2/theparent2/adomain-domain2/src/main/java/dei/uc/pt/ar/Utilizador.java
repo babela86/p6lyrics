@@ -28,7 +28,7 @@ public class Utilizador implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int idUtilizador;
 	@NotNull
-	@Column(unique=true)
+	@Column(unique = true)
 	private String email;
 	@NotNull
 	private String name;

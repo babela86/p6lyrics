@@ -30,7 +30,7 @@
 			<groupId>dei.uc.pt.ar.paj</groupId>
 			<artifactId>thews-ws2</artifactId>
 			<version>${project.version}</version>
-			<type>war</type>
+			<type>ejb</type>
 		</dependency>
 	</dependencies>
 
@@ -54,10 +54,10 @@
 							<groupId>dei.uc.pt.ar.paj</groupId>
 							<artifactId>aservice-services2</artifactId>
 						</ejbModule>
-						<webModule>
+						<ejbModule>
 							<groupId>dei.uc.pt.ar.paj</groupId>
 							<artifactId>thews-ws2</artifactId>
-						</webModule>
+						</ejbModule>
 					</modules>
 				</configuration>
 			</plugin>

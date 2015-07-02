@@ -36,7 +36,7 @@ public class UserDAO {
 		return (Utilizador) em
 				.createQuery(
 						"SELECT u FROM Utilizador u WHERE u.idUtilizador = :id")
-				.setParameter("id", id).getSingleResult();
+						.setParameter("id", id).getSingleResult();
 	}
 
 	public boolean changeAccount(Utilizador u, Utilizador uact) {
@@ -63,8 +63,8 @@ public class UserDAO {
 			q.executeUpdate();
 			@SuppressWarnings("unchecked")
 			ArrayList<Playlist> lista = (ArrayList<Playlist>) em
-					.createQuery(
-							"SELECT p FROM Playlist p WHERE p.utilizador.idUtilizador = :id")
+			.createQuery(
+					"SELECT p FROM Playlist p WHERE p.utilizador.idUtilizador = :id")
 					.setParameter("id", uact.getIdUtilizador()).getResultList();
 			for (Playlist p : lista) {
 				em.remove(em.merge(p));
@@ -74,6 +74,21 @@ public class UserDAO {
 			return true;
 		} catch (Exception e) {
 			log.error("Problema ao apagar dados da conta!");
+			return false;
+		}
+	}
+
+	public boolean changePass(String pass, int idUtil) {
+		try {
+			pass = UserRegister.encriptaPass(pass);
+			q = em.createQuery("UPDATE Utilizador SET password =:password WHERE idUtilizador = :IdUtilAtivo");
+			q.setParameter("IdUtilAtivo", idUtil);
+			q.setParameter("password", pass);
+			q.executeUpdate();
+			log.info("Dados da conta alterados");
+			return true;
+		} catch (Exception e) {
+			log.error("Dados da conta não alterados");
 			return false;
 		}
 	}

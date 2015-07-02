@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+	<title>Add Musics</title>
+</h:head>
+<h:body>
+	<ui:composition
+		template="/resources/template/common/commonLayout.xhtml">
+
+		<ui:define name="header">Edit Lyric</ui:define>
+		<ui:define name="content">
+		
+			<div>
+			
+				<h:form>
+				<h:panelGroup>
+					<h:inputTextarea value="#{editLyrics.lyricEdited}" style="width:80%;height:400px;padding:7px;" />
+				<br/>
+				<h:commandButton class="btnTabs" action="#{editLyrics.saveLyric()}" value="Save" />
+								
+				
+				</h:panelGroup>
+				
+				</h:form>
+				
+				
+			</div>
+			<div class="messageColor">
+				<br />
+				<h:messages showSummary="true" showDetail="false"
+					errorStyle="color:red" infoStyle="color:blue" />
+			</div>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
