@@ -15,8 +15,7 @@
 		<module>aweb-web2</module>
 		<module>aservice-services2</module>
 		<module>adomain-domain2</module>
-				<module>thews-ws2</module>
-		
+		<module>thews-ws2</module>
 	</modules>
 
 
@@ -103,7 +102,7 @@
 					<artifactId>wildfly-maven-plugin</artifactId>
 					<version>${wildfly-maven-plugin-version}</version>
 					<configuration>
-			<skip>true</skip>
+						<skip>true</skip>
 						<hostname>localhost</hostname>
 						<port>${server.port}</port>
 					</configuration>

@@ -1,11 +1,11 @@
 package dei.uc.pt.ar;
 
 import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Base64;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -67,7 +67,13 @@ public class UserRegister {
 				e.printStackTrace();
 			}
 			em.persist(u);
-			result = "User added to DB";
+			
+			//Added by JPM
+			//adiciona role associada ao user
+			Roles newRole = new Roles("P6AUTHORIZED", u);
+	    	em.persist( newRole );
+
+	    	result = "User added to DB";
 		}
 		return result;
 	}
@@ -105,16 +111,24 @@ public class UserRegister {
 
 	public static String encriptaPass(String password)
 			throws NoSuchAlgorithmException, UnsupportedEncodingException {
-		String sha1;
+		//String sha1;
 		if (null == password) {
 			return null;
 		}
 		MessageDigest digest;
 		try {
-			digest = MessageDigest.getInstance("SHA-1");
-			digest.update(password.getBytes(), 0, password.length());
-			sha1 = new BigInteger(1, digest.digest()).toString(16);
-			return sha1;
+			//digest = MessageDigest.getInstance("SHA1");
+			//digest.update(password.getBytes(), 0, password.length());
+			//sha1 = new BigInteger(1, digest.digest()).toString(16);
+			//return sha1;
+			//
+			//JPM Changed
+			digest = MessageDigest.getInstance("SHA-256");
+			byte[] hash = digest.digest(password.getBytes("UTF-8"));
+			String stringToStore = new String(Base64.getEncoder().encode(hash));
+			System.out.println("PWD: "+stringToStore);
+			return stringToStore;
+			
 		} catch (NoSuchAlgorithmException ex) {
 			return null;
 		}
