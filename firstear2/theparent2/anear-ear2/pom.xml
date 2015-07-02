@@ -30,6 +30,12 @@
 			<groupId>dei.uc.pt.ar.paj</groupId>
 			<artifactId>thews-ws2</artifactId>
 			<version>${project.version}</version>
+			<type>war</type>
+		</dependency>
+		<dependency>
+			<groupId>dei.uc.pt.ar.paj</groupId>
+			<artifactId>thews-wsLyrics</artifactId>
+			<version>${project.version}</version>
 			<type>ejb</type>
 		</dependency>
 	</dependencies>
@@ -50,13 +56,17 @@
 							<groupId>dei.uc.pt.ar.paj</groupId>
 							<artifactId>aweb-web2</artifactId>
 						</webModule>
+						<webModule>
+							<groupId>dei.uc.pt.ar.paj</groupId>
+							<artifactId>thews-ws2</artifactId>
+						</webModule>
 						<ejbModule>
 							<groupId>dei.uc.pt.ar.paj</groupId>
 							<artifactId>aservice-services2</artifactId>
 						</ejbModule>
 						<ejbModule>
 							<groupId>dei.uc.pt.ar.paj</groupId>
-							<artifactId>thews-ws2</artifactId>
+							<artifactId>thews-wsLyrics</artifactId>
 						</ejbModule>
 					</modules>
 				</configuration>

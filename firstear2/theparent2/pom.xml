@@ -16,6 +16,7 @@
 		<module>aservice-services2</module>
 		<module>adomain-domain2</module>
 		<module>thews-ws2</module>
+		<module>thews-wsLyrics</module>
 	</modules>
 
 

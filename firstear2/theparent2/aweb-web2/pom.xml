@@ -34,9 +34,10 @@
 			<artifactId>aservice-services2</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>dei.uc.pt.ar.paj</groupId>
-			<artifactId>thews-ws2</artifactId>
+			<artifactId>thews-wsLyrics</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
@@ -57,6 +58,6 @@
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
 		</dependency>
-		
+
 	</dependencies>
 </project>
