@@ -21,6 +21,7 @@ import dei.uc.pt.ar.UserRegister;
 import dei.uc.pt.ar.Utilizador;
 import dei.uc.pt.ar.paj.pojo.CountRest;
 import dei.uc.pt.ar.paj.pojo.PlaylistRest;
+import dei.uc.pt.ar.paj.pojo.StringRest;
 import dei.uc.pt.ar.paj.pojo.UserCollection;
 import dei.uc.pt.ar.paj.pojo.UserRest;
 
@@ -100,7 +101,7 @@ public class SimpleUserService {
 	//Remover user por id
 	@GET
 	@Path("/delete/{userId}")
-	@Produces(MediaType.APPLICATION_XML)
+	//@Produces(MediaType.APPLICATION_XML)
 	public Response removeUserById(@PathParam("userId") int id){		
 		boolean removed = ud.deleteAccountByUserID(id);
 		if (removed)
@@ -120,12 +121,11 @@ public class SimpleUserService {
 		
 	//Alterar password
 	@POST
-	@Path("/changepass/{utilId}")
+	@Path("/changepassword")
 	@Consumes({MediaType.APPLICATION_XML})
-	@Produces({MediaType.APPLICATION_XML})
-	public Response changePass(@PathParam("utilId") int id, String newpwd){
-		if ( ud.changePassword( newpwd, id) ) {
-			return Response.ok(ud.findUserById(id)).build();
+	public Response changeUserPass(UserRest user) throws NoSuchAlgorithmException, UnsupportedEncodingException, ParseException{
+		if ( ud.changePassword( user.getPassword(), user.getIdUtilizador()) ) {
+			return Response.ok(200).build();
 		}else{
 			return Response.notModified().build();
 		}

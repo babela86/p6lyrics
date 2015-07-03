@@ -1,7 +1,11 @@
 package dei.uc.pt.ar.paj;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Base64;
 import java.util.List;
 import java.util.Scanner;
 
@@ -75,7 +79,7 @@ public class WebServicesClient {
 				removeuser();
 				break;
 			case 9:
-				changepass();
+				changepassword();
 				break;
 			case 0:
 				sair = true;
@@ -300,24 +304,36 @@ public class WebServicesClient {
 		ResteasyClient client = new ResteasyClientBuilder().build();
 		ResteasyWebTarget target = client
 				.target("http://localhost:8080/thews-ws2/rest/users/delete/" + f);
-		Response response = target.request(MediaType.APPLICATION_XML).get();
+		Response response = target.request().get();
 		listusers();
 	}
 
-	public static void changepass() {
+	public static void changepassword() {
 		listusers();
 		System.out.println("Qual utilizador quer mudar a pass? (Insira o ID)");
 		Scanner sc = new Scanner(System.in);
 		int g = sc.nextInt();
 		UserRest another = new UserRest();
+		another.setIdUtilizador(g);
+		
 		System.out.println("Insira a nova pass do utilizador.");
 		Scanner sc2 = new Scanner(System.in);
 		String pass = sc2.nextLine();
-		another.setPassword(pass);
+		try {
+			another.setPassword(encriptaPass(pass));
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Erro ao codificar password:\n"+e);
+			//e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+			System.out.println("Erro ao codificar password:\n"+e);
+		}
+		
 		ResteasyClient client = new ResteasyClientBuilder().build();
 		ResteasyWebTarget target = client
-				.target("http://localhost:8080/thews-ws2/rest/users/changepass/"
-						+ g);
+				.target("http://localhost:8080/thews-ws2/rest/users/changepassword");
 		Response response = target.request(MediaType.APPLICATION_XML).post(
 				Entity.entity(another, "application/xml"));
 		listusers();
@@ -482,6 +498,31 @@ public class WebServicesClient {
 		Response response = target.request(MediaType.APPLICATION_XML).get();
 		System.out.println("Número de utilizadores logados: "
 				+ response.readEntity(CountRest.class).getContador() );
+	}
+	
+	public static String encriptaPass(String password)
+			throws NoSuchAlgorithmException, UnsupportedEncodingException {
+		//String sha1;
+		if (null == password) {
+			return null;
+		}
+		MessageDigest digest;
+		try {
+			//digest = MessageDigest.getInstance("SHA1");
+			//digest.update(password.getBytes(), 0, password.length());
+			//sha1 = new BigInteger(1, digest.digest()).toString(16);
+			//return sha1;
+			//
+			//JPM Changed
+			digest = MessageDigest.getInstance("SHA-256");
+			byte[] hash = digest.digest(password.getBytes("UTF-8"));
+			String stringToStore = new String(Base64.getEncoder().encode(hash));
+			//System.out.println("PWD: "+stringToStore);
+			return stringToStore;
+			
+		} catch (NoSuchAlgorithmException ex) {
+			return null;
+		}
 	}
 
 }
