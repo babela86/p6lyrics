@@ -51,7 +51,7 @@ public class WebServicesClient {
 			System.out.println("0 - Voltar ao menu inicial");
 			System.out.println("---------------------");
 			System.out.println("Insira uma opção!");
-			//Scanner sc = new Scanner(System.in);
+
 			int i = sc.nextInt();
 			switch (i) {
 			case 1:
@@ -112,7 +112,7 @@ public class WebServicesClient {
 			System.out.println("0 - Regressar ao menu inicial");
 			System.out.println("-----------------------------------\n");
 			System.out.println("Insira uma opção!");
-			//Scanner sc = new Scanner(System.in);
+
 			int a = sc.nextInt();
 			switch (a) {
 			case 1:
@@ -154,14 +154,18 @@ public class WebServicesClient {
 		boolean sairdomenu = false;
 		while (!sairdomenu) {
 			System.out.println("\n");
+			System.out.println("-----------------------------------\n");
+			System.out.println("           Menu playlist\n");
+			System.out.println("-----------------------------------\n");
 			System.out.println("1 - Listar todas as playlists");
 			System.out.println("2 - Número de playlists existentes");
 			System.out.println("3 - Músicas de uma playlist");
 			System.out.println("4 - Playlists de um user");
+			System.out.println("\n");
 			System.out.println("0 - Regressar ao menu inicial");
-			System.out.println("---------------------");
+			System.out.println("-----------------------------------\n");
 			System.out.println("Insira uma opção!");
-			//Scanner sc = new Scanner(System.in);
+			
 			int b = sc.nextInt();
 			switch (b) {
 			case 1:
@@ -199,7 +203,7 @@ public class WebServicesClient {
 		System.out.println("0 - Sair da aplicação");
 		System.out.println("-----------------------------------\n");
 		System.out.println("Insira uma opção: ");
-		//Scanner sc = new Scanner(System.in);
+
 		int c = sc.nextInt();
 		switch (c) {
 		case 0:
@@ -239,23 +243,18 @@ public class WebServicesClient {
 
 	public static void userdata() {
 		listusers();
-		System.out
-				.println("Qual o utilizador que deseja consultar? (Insira o ID)");
-		//Scanner sc = new Scanner(System.in);
+		System.out.println("Qual o utilizador que deseja consultar? (Insira o ID)");
 		int d = sc.nextInt();
 		ResteasyClient client = new ResteasyClientBuilder().build();
 		ResteasyWebTarget target = client
 				.target("http://localhost:8080/thews-ws2/rest/users/list/" + d);
 		Response response = target.request(MediaType.APPLICATION_XML).get();
-		System.out
-				.println(response.readEntity(UserRest.class).toString());
+		System.out.println(response.readEntity(UserRest.class).toString());
 	}
 
 	public static void playlistsfromuser() {
 		listusers();
-		System.out
-				.println("Qual o utilizador que deseja consultar? (Insira o ID)");
-		//Scanner sc = new Scanner(System.in);
+		System.out.println("Qual o utilizador que deseja consultar? (Insira o ID)");
 		int e = sc.nextInt();
 		ResteasyClient client = new ResteasyClientBuilder().build();
 		ResteasyWebTarget target = client.target("http://localhost:8080/thews-ws2/rest/playlists/fromuser/" + e);
@@ -269,20 +268,15 @@ public class WebServicesClient {
 		//limpar enter
 		sc.nextLine();
 		System.out.println("Insira nome do utilizador.");
-		//Scanner sc = new Scanner(System.in);
 		String name = sc.nextLine();
 		novo.setName(name);
 		System.out.println("Insira email do utilizador.");
-		//Scanner sc1 = new Scanner(System.in);
 		String email = sc.nextLine();
 		novo.setEmail(email);
 		System.out.println("Insira pass do utilizador.");
-		//Scanner sc2 = new Scanner(System.in);
 		String pass = sc.nextLine();
 		novo.setPassword(pass);
-		System.out
-				.println("Data de nascimento no formato: ano-mes-dia. (ex: 1983-04-03)");
-		//Scanner sc3 = new Scanner(System.in);
+		System.out.println("Data de nascimento no formato: ano-mes-dia. (ex: 1983-04-03)");
 		String birth = sc.nextLine();
 		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
 		try {
@@ -298,9 +292,7 @@ public class WebServicesClient {
 
 	public static void removeuser() {
 		listusers();
-		System.out
-				.println("Qual o utilizador que deseja remover? (Insira o ID)");
-		//Scanner sc = new Scanner(System.in);
+		System.out.println("Qual o utilizador que deseja remover? (Insira o ID)");
 		int f = sc.nextInt();
 		ResteasyClient client = new ResteasyClientBuilder().build();
 		ResteasyWebTarget target = client.target("http://localhost:8080/thews-ws2/rest/users/delete/" + f);
@@ -311,7 +303,6 @@ public class WebServicesClient {
 	public static void changepassword() {
 		listusers();
 		System.out.println("Qual utilizador quer mudar a pass? (Insira o ID)");
-		//Scanner sc = new Scanner(System.in);
 		int g = sc.nextInt();
 		//limpa enter
 		sc.nextLine();
@@ -319,7 +310,6 @@ public class WebServicesClient {
 		another.setIdUtilizador(g);
 		
 		System.out.println("Insira a nova pass do utilizador.");
-		//Scanner sc2 = new Scanner(System.in);
 		String pass = sc.nextLine();
 		try {
 			another.setPassword(encriptaPass(pass));
@@ -342,8 +332,7 @@ public class WebServicesClient {
 
 	public static void listmusics() {
 		ResteasyClient client = new ResteasyClientBuilder().build();
-		ResteasyWebTarget target = client
-				.target("http://localhost:8080/thews-ws2/rest/musics/list");
+		ResteasyWebTarget target = client.target("http://localhost:8080/thews-ws2/rest/musics/list");
 		Response response = target.request().get();
 		System.out.println(response.readEntity(MusicCollection.class));
 	}
@@ -358,7 +347,6 @@ public class WebServicesClient {
 	public static void musicfromplaylist() {
 		listplaylists();
 		System.out.println("Qual a playlist que deseja consultar? (Insira o ID)");
-		//Scanner sc = new Scanner(System.in);
 		int h = sc.nextInt();
 		ResteasyClient client = new ResteasyClientBuilder().build();
 		ResteasyWebTarget target = client
@@ -391,11 +379,9 @@ public class WebServicesClient {
 	public static void musicdata() {
 		listmusics();
 		System.out.println("Qual a música que deseja consultar? (Insira o ID)");
-		//Scanner sc = new Scanner(System.in);
 		int i = sc.nextInt();
 		ResteasyClient client = new ResteasyClientBuilder().build();
-		ResteasyWebTarget target = client
-				.target("http://localhost:8080/thews-ws2/rest/musics/list/" + i);
+		ResteasyWebTarget target = client.target("http://localhost:8080/thews-ws2/rest/musics/list/" + i);
 		Response response = target.request(MediaType.APPLICATION_XML).get();
 		System.out.println(response.readEntity(MusicRest.class).toString());
 	}
@@ -403,26 +389,20 @@ public class WebServicesClient {
 	public static void musicfromuser() {
 		listusers();
 		System.out.println("Qual o utilizador que deseja consultar? (Insira o ID)");
-		//Scanner sc = new Scanner(System.in);
 		int j = sc.nextInt();
 		ResteasyClient client = new ResteasyClientBuilder().build();
 		ResteasyWebTarget target = client
-				.target("http://localhost:8080/thews-ws2/rest/musics/fromuser/"
-						+ j);
+				.target("http://localhost:8080/thews-ws2/rest/musics/fromuser/" + j);
 		Response response = target.request(MediaType.APPLICATION_XML).get();
-		System.out.println(response.readEntity(MusicCollection.class)
-				.toString());
+		System.out.println(response.readEntity(MusicCollection.class).toString());
 	}
 
 	public static void addmusictoplaylist() {
 		listplaylists();
-		System.out
-				.println("Qual a playlist a que deseja adicionar a música? (Insira o ID)");
-		//Scanner sc = new Scanner(System.in);
+		System.out.println("Qual a playlist a que deseja adicionar a música? (Insira o ID)");
 		int k = sc.nextInt();
 		listmusics();
 		System.out.println("Qual a música deseja adicionar? (Insira o ID)");
-		//Scanner sc1 = new Scanner(System.in);
 		int l = sc.nextInt();
 
 		ResteasyClient client = new ResteasyClientBuilder().build();
@@ -436,12 +416,9 @@ public class WebServicesClient {
 		listplaylists();
 		System.out
 				.println("Qual a playlist a que deseja remover a música? (Insira o ID)");
-		//Scanner sc = new Scanner(System.in);
 		int m = sc.nextInt();
-		//musicfromplaylist();
 		musicfromplaylist(m);
 		System.out.println("Qual a música que deseja remover? (Insira o ID)");
-		//Scanner sc1 = new Scanner(System.in);
 		int n = sc.nextInt();
 
 		ResteasyClient client = new ResteasyClientBuilder().build();
@@ -454,21 +431,17 @@ public class WebServicesClient {
 	
 	public static void removemusic() {
 		listmusics();
-		System.out
-				.println("Qual a música que deseja remover? (Insira o ID)");
-		//Scanner sc = new Scanner(System.in);
-		int o = sc.nextInt();
+		System.out.println("Qual a música que deseja remover? (Insira o ID)");
+		int n = sc.nextInt();
 		ResteasyClient client = new ResteasyClientBuilder().build();
-		ResteasyWebTarget target = client
-				.target("http://localhost:8080/thews-ws2/rest/musics/delete/" + o);
+		ResteasyWebTarget target = client.target("http://localhost:8080/thews-ws2/rest/musics/delete/" + n);
 		target.request(MediaType.APPLICATION_XML).get();
 		musicfromuser();
 	}
 	
 	public static void countplaylists() {
 		ResteasyClient client = new ResteasyClientBuilder().build();
-		ResteasyWebTarget target = client
-				.target("http://localhost:8080/thews-ws2/rest/playlists/number");
+		ResteasyWebTarget target = client.target("http://localhost:8080/thews-ws2/rest/playlists/number");
 		Response response = target.request(MediaType.APPLICATION_XML).get();
 		System.out.println("Número de playlists registadas: "
 				+ response.readEntity(CountRest.class).getContador() );
@@ -494,24 +467,15 @@ public class WebServicesClient {
 	
 	public static String encriptaPass(String password)
 			throws NoSuchAlgorithmException, UnsupportedEncodingException {
-		//String sha1;
 		if (null == password) {
 			return null;
 		}
 		MessageDigest digest;
 		try {
-			//digest = MessageDigest.getInstance("SHA1");
-			//digest.update(password.getBytes(), 0, password.length());
-			//sha1 = new BigInteger(1, digest.digest()).toString(16);
-			//return sha1;
-			//
-			//JPM Changed
 			digest = MessageDigest.getInstance("SHA-256");
 			byte[] hash = digest.digest(password.getBytes("UTF-8"));
 			String stringToStore = new String(Base64.getEncoder().encode(hash));
-			//System.out.println("PWD: "+stringToStore);
 			return stringToStore;
-			
 		} catch (NoSuchAlgorithmException ex) {
 			return null;
 		}
