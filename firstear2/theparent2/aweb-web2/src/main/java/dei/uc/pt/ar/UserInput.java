@@ -31,7 +31,9 @@ public class UserInput implements Serializable {
 	@Inject
 	private MusicDAO md;
 	@Inject
-	private PlaylistDAO pd;
+	private PlaylistDAO pd;	
+	@Inject
+	private UserLoged ul;
 
 	private String email;
 	private String pass;
@@ -103,6 +105,7 @@ public class UserInput implements Serializable {
 				e.printStackTrace();
 				return "/index";
 			}
+			ul.add(util);
 
 			this.activeUser = util;
 			this.name = activeUser.getName();
@@ -123,6 +126,7 @@ public class UserInput implements Serializable {
 			context.addMessage(null, new FacesMessage("Logout failed."));
 			//e.printStackTrace();
 		}
+		ul.remove(this.activeUser);
 		
 		this.activeUser = null;
 		this.day = "";

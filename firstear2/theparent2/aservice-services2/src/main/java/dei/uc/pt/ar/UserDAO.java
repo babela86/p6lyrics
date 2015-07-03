@@ -94,7 +94,7 @@ public class UserDAO {
 	
 	public boolean deleteAccountByUserID(int userid) {
 		try {
-			q = em.createQuery("UPDATE Musica m SET m.utilizador =1 WHERE m.id_util =:userid");
+			q = em.createQuery("UPDATE Musica m SET m.utilizador =1 WHERE m.utilizador.idUtilizador =:userid");
 			q.setParameter("userid", userid);
 			q.executeUpdate();
 			@SuppressWarnings("unchecked")
@@ -113,7 +113,7 @@ public class UserDAO {
 			log.info("Dados da conta apagados!");
 			return true;
 		} catch (Exception e) {
-			log.error("Problema ao apagar dados da conta!");
+			log.error("Problema ao apagar dados da conta!\n"+e);
 			return false;
 		}
 	}

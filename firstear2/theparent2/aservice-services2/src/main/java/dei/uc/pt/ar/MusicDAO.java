@@ -31,6 +31,12 @@ public class MusicDAO {
 	}
 
 	@SuppressWarnings("unchecked")
+	public int findNumberMusics() {
+		return (int) em.createQuery("SELECT m FROM Musica m")
+				.getResultList().size();
+	}
+	
+	@SuppressWarnings("unchecked")
 	public ArrayList<Musica> findAllMusic() {
 		return (ArrayList<Musica>) em.createQuery("SELECT m FROM Musica m")
 				.getResultList();

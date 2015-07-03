@@ -1,13 +1,33 @@
-package pt.uc.dei.ar.paj.wsclient;
+package dei.uc.pt.ar.paj.pojo;
 
 import javax.xml.bind.annotation.XmlRootElement;
+
+import dei.uc.pt.ar.Playlist;
 
 @XmlRootElement(name="playlist")
 public class PlaylistRest {
 	private String name;
 	private int idPlaylist;
-
-
+	
+	//construtor sem parametros
+	public PlaylistRest() {
+		super();
+	}
+	
+	//construtor
+	public PlaylistRest(String name, int idPlaylist) {
+		super();
+		this.name = name;
+		this.idPlaylist = idPlaylist;
+	}
+	
+	//construtor
+	public PlaylistRest(Playlist pl) {
+		super();
+		this.name = pl.getName();
+		this.idPlaylist = pl.getIdPlaylist();
+	}
+	
 	public String getName() {
 		return name;
 	}

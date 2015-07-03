@@ -1,14 +1,26 @@
-package pt.uc.dei.ar.paj.wsclient;
+package dei.uc.pt.ar.paj;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Scanner;
+
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
+import org.jboss.resteasy.util.GenericType;
+
+import dei.uc.pt.ar.paj.pojo.MusicCollection;
+import dei.uc.pt.ar.paj.pojo.MusicRest;
+import dei.uc.pt.ar.paj.pojo.PlaylistCollection;
+import dei.uc.pt.ar.paj.pojo.PlaylistRest;
+import dei.uc.pt.ar.paj.pojo.UserCollection;
+import dei.uc.pt.ar.paj.pojo.UserRest;
+import dei.uc.pt.ar.paj.pojo.CountRest;
 
 public class WebServicesClient {
 	public static void main(String[] args) {
@@ -214,11 +226,10 @@ public class WebServicesClient {
 	public static void countusers() {
 		ResteasyClient client = new ResteasyClientBuilder().build();
 		ResteasyWebTarget target = client
-				.target("http://localhost:8080/thews-ws/rest/users/list");
+				.target("http://localhost:8080/thews-ws2/rest/users/number");
 		Response response = target.request(MediaType.APPLICATION_XML).get();
 		System.out.println("Número de utilizadores registados: "
-				+ response.readEntity(UserCollection.class).getUserList()
-						.size());
+				+ response.readEntity(CountRest.class).getContador() );
 	}
 
 	public static void userdata() {
@@ -229,7 +240,7 @@ public class WebServicesClient {
 		int d = sc.nextInt();
 		ResteasyClient client = new ResteasyClientBuilder().build();
 		ResteasyWebTarget target = client
-				.target("http://localhost:8080/thews-ws/rest/users/list/" + d);
+				.target("http://localhost:8080/thews-ws2/rest/users/list/" + d);
 		Response response = target.request(MediaType.APPLICATION_XML).get();
 		System.out
 				.println(response.readEntity(UserRest.class).toString());
@@ -242,7 +253,7 @@ public class WebServicesClient {
 		Scanner sc = new Scanner(System.in);
 		int e = sc.nextInt();
 		ResteasyClient client = new ResteasyClientBuilder().build();
-		ResteasyWebTarget target = client.target("http://localhost:8080/thews-ws/rest/playlists/fromuser/" + e);
+		ResteasyWebTarget target = client.target("http://localhost:8080/thews-ws2/rest/playlists/fromuser/" + e);
 		Response response = target.request(MediaType.APPLICATION_XML).get();
 		System.out.println(response.readEntity(PlaylistCollection.class)
 				.toString());
@@ -274,7 +285,7 @@ public class WebServicesClient {
 		}
 		ResteasyClient client = new ResteasyClientBuilder().build();
 		ResteasyWebTarget target = client
-				.target("http://localhost:8080/thews-ws/rest/users/add");
+				.target("http://localhost:8080/thews-ws2/rest/users/add");
 		Response response = target.request(MediaType.APPLICATION_XML).post(
 				Entity.entity(novo, "application/xml"));
 		listusers();
@@ -288,7 +299,7 @@ public class WebServicesClient {
 		int f = sc.nextInt();
 		ResteasyClient client = new ResteasyClientBuilder().build();
 		ResteasyWebTarget target = client
-				.target("http://localhost:8080/thews-ws/rest/users/delete/" + f);
+				.target("http://localhost:8080/thews-ws2/rest/users/delete/" + f);
 		Response response = target.request(MediaType.APPLICATION_XML).get();
 		listusers();
 	}
@@ -305,7 +316,7 @@ public class WebServicesClient {
 		another.setPassword(pass);
 		ResteasyClient client = new ResteasyClientBuilder().build();
 		ResteasyWebTarget target = client
-				.target("http://localhost:8080/thews-ws/rest/users/changepass/"
+				.target("http://localhost:8080/thews-ws2/rest/users/changepass/"
 						+ g);
 		Response response = target.request(MediaType.APPLICATION_XML).post(
 				Entity.entity(another, "application/xml"));
@@ -315,21 +326,23 @@ public class WebServicesClient {
 	public static void listmusics() {
 		ResteasyClient client = new ResteasyClientBuilder().build();
 		ResteasyWebTarget target = client
-				.target("http://localhost:8080/thews-ws/rest/musics/list");
-		Response response = target.request(MediaType.APPLICATION_XML).get();
-		System.out.println(response.readEntity(MusicCollection.class)
-				.toString());
+				.target("http://localhost:8080/thews-ws2/rest/musics/list");
+		Response response = target.request().get();
+		System.out.println(response.readEntity(MusicCollection.class));
 	}
 
 	public static void countmusics() {
 		ResteasyClient client = new ResteasyClientBuilder().build();
 		ResteasyWebTarget target = client
-				.target("http://localhost:8080/thews-ws/rest/musics/list");
+				.target("http://localhost:8080/thews-ws2/rest/musics/number");
 		Response response = target.request(MediaType.APPLICATION_XML).get();
-		System.out.println("Número de músicas na BD: "
-				+ response.readEntity(MusicCollection.class).getMusicList()
-						.size());
+		System.out.println("Numero de Musicas existentes: " + response.readEntity(CountRest.class).getContador() );
+		//Response response = target.request(MediaType.TEXT_PLAIN).get();
+		//System.out.println("Número de músicas na BD: "
+		//		+ response.readEntity(String.class));
 	}
+	
+
 
 	public static void musicfromplaylist() {
 		listplaylists();
@@ -339,8 +352,18 @@ public class WebServicesClient {
 		int h = sc.nextInt();
 		ResteasyClient client = new ResteasyClientBuilder().build();
 		ResteasyWebTarget target = client
-				.target("http://localhost:8080/thews-ws/rest/musics/fromplaylist/"
+				.target("http://localhost:8080/thews-ws2/rest/musics/fromplaylist/"
 						+ h);
+		Response response = target.request(MediaType.APPLICATION_XML).get();
+		System.out.println(response.readEntity(MusicCollection.class)
+				.toString());
+	}
+	
+	public static void musicfromplaylist(int playlistID) {
+		ResteasyClient client = new ResteasyClientBuilder().build();
+		ResteasyWebTarget target = client
+				.target("http://localhost:8080/thews-ws2/rest/musics/fromplaylist/"
+						+ playlistID);
 		Response response = target.request(MediaType.APPLICATION_XML).get();
 		System.out.println(response.readEntity(MusicCollection.class)
 				.toString());
@@ -349,7 +372,7 @@ public class WebServicesClient {
 	public static void listplaylists() {
 		ResteasyClient client = new ResteasyClientBuilder().build();
 		ResteasyWebTarget target = client
-				.target("http://localhost:8080/thews-ws/rest/playlists/list");
+				.target("http://localhost:8080/thews-ws2/rest/playlists/list");
 		Response response = target.request(MediaType.APPLICATION_XML).get();
 		System.out.println(response.readEntity(PlaylistCollection.class)
 				.toString());
@@ -362,7 +385,7 @@ public class WebServicesClient {
 		int i = sc.nextInt();
 		ResteasyClient client = new ResteasyClientBuilder().build();
 		ResteasyWebTarget target = client
-				.target("http://localhost:8080/thews-ws/rest/musics/list/" + i);
+				.target("http://localhost:8080/thews-ws2/rest/musics/list/" + i);
 		Response response = target.request(MediaType.APPLICATION_XML).get();
 		System.out.println(response.readEntity(MusicRest.class).toString());
 	}
@@ -375,7 +398,7 @@ public class WebServicesClient {
 		int j = sc.nextInt();
 		ResteasyClient client = new ResteasyClientBuilder().build();
 		ResteasyWebTarget target = client
-				.target("http://localhost:8080/thews-ws/rest/musics/fromuser/"
+				.target("http://localhost:8080/thews-ws2/rest/musics/fromuser/"
 						+ j);
 		Response response = target.request(MediaType.APPLICATION_XML).get();
 		System.out.println(response.readEntity(MusicCollection.class)
@@ -395,7 +418,7 @@ public class WebServicesClient {
 
 		ResteasyClient client = new ResteasyClientBuilder().build();
 		ResteasyWebTarget target = client
-				.target("http://localhost:8080/thews-ws/rest/musics/add/" + l
+				.target("http://localhost:8080/thews-ws2/rest/musics/add/" + l
 						+ "/toplaylist/" + k);
 		Response response = target.request(MediaType.APPLICATION_XML).get();
 		musicfromplaylist();
@@ -407,14 +430,15 @@ public class WebServicesClient {
 				.println("Qual a playlist a que deseja remover a música? (Insira o ID)");
 		Scanner sc = new Scanner(System.in);
 		int m = sc.nextInt();
-		musicfromplaylist();
+		//musicfromplaylist();
+		musicfromplaylist(m);
 		System.out.println("Qual a música que deseja remover? (Insira o ID)");
 		Scanner sc1 = new Scanner(System.in);
 		int n = sc.nextInt();
 
 		ResteasyClient client = new ResteasyClientBuilder().build();
 		ResteasyWebTarget target = client
-				.target("http://localhost:8080/thews-ws/rest/musics/remove/"
+				.target("http://localhost:8080/thews-ws2/rest/musics/remove/"
 						+ n + "/fromplaylist/" + m);
 		Response response = target.request(MediaType.APPLICATION_XML).get();
 		musicfromplaylist();
@@ -428,7 +452,7 @@ public class WebServicesClient {
 		int o = sc.nextInt();
 		ResteasyClient client = new ResteasyClientBuilder().build();
 		ResteasyWebTarget target = client
-				.target("http://localhost:8080/thews-ws/rest/musics/delete/" + o);
+				.target("http://localhost:8080/thews-ws2/rest/musics/delete/" + o);
 		Response response = target.request(MediaType.APPLICATION_XML).get();
 		musicfromuser();
 	}
@@ -436,17 +460,16 @@ public class WebServicesClient {
 	public static void countplaylists() {
 		ResteasyClient client = new ResteasyClientBuilder().build();
 		ResteasyWebTarget target = client
-				.target("http://localhost:8080/thews-ws/rest/playlists/list");
+				.target("http://localhost:8080/thews-ws2/rest/playlists/number");
 		Response response = target.request(MediaType.APPLICATION_XML).get();
 		System.out.println("Número de playlists registadas: "
-				+ response.readEntity(PlaylistCollection.class).getListaPlaylist()
-						.size());
+				+ response.readEntity(CountRest.class).getContador() );
 	}
 	
 	public static void logeduserlist() {
 		ResteasyClient client = new ResteasyClientBuilder().build();
 		ResteasyWebTarget target = client
-				.target("http://localhost:8080/thews-ws/rest/users/listlogedusers");
+				.target("http://localhost:8080/thews-ws2/rest/users/listlogedusers");
 		Response response = target.request(MediaType.APPLICATION_XML).get();
 		System.out
 				.println(response.readEntity(UserCollection.class).toString());
@@ -455,11 +478,10 @@ public class WebServicesClient {
 	public static void logedusercounter() {
 		ResteasyClient client = new ResteasyClientBuilder().build();
 		ResteasyWebTarget target = client
-				.target("http://localhost:8080/thews-ws/rest/users/listlogedusers");
+				.target("http://localhost:8080/thews-ws2/rest/users/numberlogedusers");
 		Response response = target.request(MediaType.APPLICATION_XML).get();
 		System.out.println("Número de utilizadores logados: "
-				+ response.readEntity(UserCollection.class).getUserList()
-						.size());
+				+ response.readEntity(CountRest.class).getContador() );
 	}
 
 }

@@ -14,10 +14,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+//import javax.xml.bind.annotation.*;
 
 @Entity
 @Table(name = "musica")
 @NamedQuery(name = "Musica.findAll", query = "SELECT m FROM Musica m")
+//@XmlRootElement(name="musica")
 public class Musica implements Serializable {
 
 	private static final long serialVersionUID = 1L;

@@ -1,21 +1,22 @@
-package pt.uc.dei.ar.paj.wsclient;
+package dei.uc.pt.ar.paj.pojo;
 
-import java.util.List;
+import java.util.ArrayList;
 
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name="collection")
+@XmlRootElement
 public class UserCollection {
 	
-	@XmlElement(name="utilizador")
-	private List<UserRest> userList;
+	//@XmlElement(name="utilizador")
+	private ArrayList<UserRest> userList;
+	
+	
 	
 	//Getter e Setter para userList
-	public List<UserRest> getUserList() {
+	public ArrayList<UserRest> getUserList() {
 		return userList;
 	}
-	public void setUserList(List<UserRest> userList) {
+	public void setUserList(ArrayList<UserRest> userList) {
 		this.userList = userList;
 	}
 

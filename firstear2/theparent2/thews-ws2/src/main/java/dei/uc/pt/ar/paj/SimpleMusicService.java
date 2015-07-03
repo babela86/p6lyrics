@@ -12,7 +12,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import dei.uc.pt.ar.MusicDAO;
-import dei.uc.pt.ar.Musica;
+import dei.uc.pt.ar.paj.pojo.CountRest;
+import dei.uc.pt.ar.paj.pojo.MusicCollection;
+import dei.uc.pt.ar.paj.pojo.MusicRest;
+import dei.uc.pt.ar.paj.conversion.ConvertMusic;
 
 @Stateless
 @Path("/musics")
@@ -22,40 +25,60 @@ public class SimpleMusicService {
 	private MusicDAO md;
 	
 	
+	//Contar todas as músicas
+	@GET
+	@Path("/number")
+	@Produces({MediaType.APPLICATION_XML})
+	public CountRest getNumberMusics(){
+		//return 112;
+		return new CountRest( ""+md.findNumberMusics() );
+	}
+	
+	@GET
+	@Path("/test")
+	@Produces({MediaType.TEXT_PLAIN})
+	public String test(){
+		//return 112;
+		return "teste";
+	}
+	
+	
 	//Listar todas as músicas
 	@GET
 	@Path("/list")
 	@Produces({MediaType.APPLICATION_XML})
-	public List<Musica> getAllmusics(){
-		
-		return md.findAllMusic();
+	public MusicCollection getAllmusics(){
+		return new MusicCollection(md.findAllMusic());
 	}
+//	public MusicCollection getAllmusics(){
+//		return new MusicCollection( md.findAllMusic());
+//	}
 	
 	//Músicas de uma playlist concreta
 	@GET
 	@Path("/fromplaylist/{playId}")
 	@Produces({MediaType.APPLICATION_XML})
-	public List<Musica> getMusicFromPlaylist(@PathParam("playId") int id){		
-		return md.listMusicasPlaylist(id);
+	public MusicCollection getMusicFromPlaylist(@PathParam("playId") int id){	
+		return new MusicCollection( md.listMusicasPlaylist(id));
 	}
 	
-	//Listar músicas de um user concreto
+	//Listar músicas de um user por id
 	@GET
 	@Path("/fromuser/{userId}")
 	@Produces({MediaType.APPLICATION_XML})
-	public List<Musica> getMusicFromUser(@PathParam("userId") int id){		
-		return md.findMyMusic(id);
+	public MusicCollection getMusicFromUser(@PathParam("userId") int id){		
+		return new MusicCollection( md.findMyMusic(id));
 	}
 	
-	//Listar uma música concreta
+	//Listar uma música por id
 	@GET
 	@Path("/list/{musicId}")
 	@Produces({MediaType.APPLICATION_XML})
-	public Musica getMusicById(@PathParam("musicId") int id){		
-		return md.getMusic(id);
+	public MusicRest getMusicById(@PathParam("musicId") int id){		
+		return new MusicRest( md.getMusic(id) );
 	}
 	
-	//Remover musica concreta de um user (passa para o gestor)
+	//Remover musica por id de um user (owner passa a ser o gestor)
 	@GET
 	@Path("/delete/{musicId}")
 	@Produces(MediaType.APPLICATION_XML)
@@ -67,7 +90,7 @@ public class SimpleMusicService {
 			return Response.notModified().build();
 	}
 	
-	//Adicionar música a uma playlist
+	//Adicionar música a uma playlist por IDs
 	@GET
 	@Path("/add/{musicId}/toplaylist/{playId}")
 	@Produces({MediaType.APPLICATION_XML})
@@ -79,7 +102,7 @@ public class SimpleMusicService {
 			return Response.notModified().build();
 	}
 	
-	//Remover música a uma playlist
+	//Remover música a uma playlist por IDs
 	@GET
 	@Path("/remove/{musicId}/fromplaylist/{playId}")
 	@Produces({MediaType.APPLICATION_XML})

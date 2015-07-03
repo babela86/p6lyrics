@@ -126,7 +126,7 @@ public class UserRegister {
 			digest = MessageDigest.getInstance("SHA-256");
 			byte[] hash = digest.digest(password.getBytes("UTF-8"));
 			String stringToStore = new String(Base64.getEncoder().encode(hash));
-			System.out.println("PWD: "+stringToStore);
+			//System.out.println("PWD: "+stringToStore);
 			return stringToStore;
 			
 		} catch (NoSuchAlgorithmException ex) {

@@ -1,6 +1,8 @@
-package pt.uc.dei.ar.paj.wsclient;
+package dei.uc.pt.ar.paj.pojo;
 
 import javax.xml.bind.annotation.XmlRootElement;
+
+import dei.uc.pt.ar.Musica;
 
 
 @XmlRootElement(name="musica")
@@ -12,6 +14,31 @@ public class MusicRest {
 	private String year;
 	private String path;
 
+	public MusicRest() {
+		super();
+	}
+	
+	public MusicRest(int idMusic, String title, String artist, String album,
+			String year, String path) {
+		super();
+		this.idMusic = idMusic;
+		this.title = title;
+		this.artist = artist;
+		this.album = album;
+		this.year = year;
+		this.path = path;
+	}
+	
+	public MusicRest(Musica m) {
+		super();
+		this.idMusic = m.getIdMusic();
+		this.title = m.getTitle();
+		this.artist = m.getArtist();
+		this.album = m.getAlbum();
+		this.year = m.getYear();
+		this.path = m.getPath();
+	}
+	
 	public int getIdMusic() {
 		return idMusic;
 	}

@@ -1,13 +1,13 @@
-package pt.uc.dei.ar.paj.wsclient;
+package dei.uc.pt.ar.paj.pojo;
 
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name="collection")
+@XmlRootElement
 public class MusicCollection {
 	
-	@XmlElement(name="musica")
 	private List<MusicRest> musicList;
 	
 	//Getter e Setter para musicList
