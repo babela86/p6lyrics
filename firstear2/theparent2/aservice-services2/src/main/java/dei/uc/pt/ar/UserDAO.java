@@ -93,7 +93,8 @@ public class UserDAO {
 	}
 	
 	public boolean deleteAccountByUserID(int userid) {
-		System.out.println("eliminar "+userid);
+		//System.out.println("eliminar "+userid);
+		log.info("eliminar "+userid);
 		try {
 			q = em.createQuery("UPDATE Musica m SET m.utilizador =1 WHERE m.utilizador.idUtilizador =:userid");
 			q.setParameter("userid", userid);

@@ -37,15 +37,17 @@ public class SaveLyric {
 		this.lyricString = lyric.getLyric();
 
 		List<Lyric> list = ld.findLyricsByUser(idUser);
-		for (int i = 0; i < list.size(); i++)
-			System.out.println(list.get(i).getIdLyric());
+		//for (int i = 0; i < list.size(); i++) {
+			//System.out.println(list.get(i).getIdLyric());
+		//}
+			
 
 		try {
 			if (list.isEmpty()) {
 				em.persist(lyric);
 				log.info("A letra foi criada com sucesso na base de dados");
 				result = "A letra foi criada na base de dados...";
-				System.out.println("entre1");
+				//System.out.println("entre1");
 			} else {
 				for (Lyric l : list) {
 					if (l.getMusica().getIdMusic() == this.idMusic
@@ -54,11 +56,11 @@ public class SaveLyric {
 						if (ld.updateLyrics(lyricString, idLyric)) {
 							log.info("A letra foi actualizada com sucesso");
 							result = "A letra foi actualizada...";
-							System.out.println("entre2");
+							//System.out.println("entre2");
 						} else {
 							log.info("Ocorreu um erro na actualização da letra");
 							result = "A letra não foi actualizada...";
-							System.out.println("entre2");
+							//System.out.println("entre2");
 						}
 					}
 				}
@@ -66,7 +68,7 @@ public class SaveLyric {
 					em.persist(lyric);
 					log.info("A letra foi criada com sucesso na base de dados");
 					result = "A letra foi criada na base de dados...";
-					System.out.println("entre3");
+					//System.out.println("entre3");
 				}
 			}
 			// if (list.size() != 0) {
@@ -98,7 +100,7 @@ public class SaveLyric {
 			// }
 		} catch (Exception e) {
 			log.error("An error ocurred: " + e.getMessage());
-			System.out.println("entre4");
+			//System.out.println("entre4");
 		}
 
 		// System.out.println(result);
