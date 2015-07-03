@@ -18,7 +18,7 @@ public class ApplicationConfig extends Application{
 	private void addRestResourceClasses(Set<Class<?>> resources) {
 		resources.add(SimpleService.class);
 		resources.add(SimpleUserService.class);
-		resources.add(SimpleMusicService.class);
+		resources.add(SimpleMusicServiceTest.class);
 		resources.add(SimplePlaylistService.class);
 
 	}

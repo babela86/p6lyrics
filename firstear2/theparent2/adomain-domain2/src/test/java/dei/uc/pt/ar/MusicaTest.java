@@ -15,7 +15,7 @@ public class MusicaTest {
 
 	@Test
 	public void testGetId() {
-		System.out.println("getId");
+		// System.out.println("getId");
 		Musica mustest = new Musica();
 		int expected = 0;
 		int result = mustest.getIdMusic();
