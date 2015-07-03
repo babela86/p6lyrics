@@ -50,29 +50,31 @@
 								action="#{removeFromPlaylist.removeFrom(list.idMusic)}" />
 						</h:column>
 					</h:dataTable>
-				</h:form>
-				<div id="allPop" style="margin-top: 20px; width: 30%;">
-					<h:panelGroup rendered="#{searchMusicsServer.onOff}">
-						<div id="popup1">
-							<div class="popup">
-								<div class="contentPop">
-									<h:inputTextarea disabled="true"
-										value="#{searchMusicsServer.lyricResult}"
-										style="width:90%;height:100%;background:#F3F5F7;" />
-								</div>
-								<br /> <a class="closebtn"
-									href="#{editLyrics.lyricToEdit()}">Edit
-									lyric</a>
-<!-- 								<h:commandButton class="closebtn" -->
-<!-- 									action="#{editLyrics.lyricToEdit()}" -->
-<!-- 									value="Edit Lyric"  /> -->
-								<h:commandButton class="closebtn" value="Close"
-									action="#{searchMusicsServer.renderOFF()}" />
 
+					<div id="allPop" style="margin-top: 20px; width: 30%;">
+						<h:panelGroup rendered="#{searchMusicsServer.onOff}">
+							<div id="popup1">
+								<div class="popup">
+									<div class="contentPop">
+										<h:outputText value="#{searchMusicsServer.artistTitle}" styleClass="artistTitle"
+											 />
+										<h:inputTextarea disabled="true"
+											value="#{searchMusicsServer.lyricResult}"
+											style="width:90%;height:100%;background:#F3F5F7;" />
+									</div>
+									<br /> <a class="closebtn" href="#{editLyrics.lyricToEdit()}">Edit
+										lyric</a>
+									<!-- 								<h:commandButton class="closebtn" -->
+									<!-- 									action="#{editLyrics.lyricToEdit()}" -->
+									<!-- 									value="Edit Lyric"  /> -->
+									<h:commandButton class="closebtn" value="Close"
+										action="#{searchMusicsServer.renderOFF()}" />
+
+								</div>
 							</div>
-						</div>
-					</h:panelGroup>
-				</div>
+						</h:panelGroup>
+					</div>
+				</h:form>
 			</div>
 			<div class="messageColor">
 				<br />

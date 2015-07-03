@@ -11,19 +11,25 @@ import lyricsSearch.ChartLyricsRest;
 import lyricsSearch.ChartLyricsSoap;
 import lyricsSearch.LyricsWikiaRest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @RequestScoped
 @Named
 public class SearchMusicsServer implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	private String artist;
-	private String title;
-	private int idMusica;
+
+	private static final Logger log = LoggerFactory
+			.getLogger(SearchMusicsServer.class.getName());
+	private String artist = null;
+	private String title = null;
+	private int idMusica = 0;
 	private String lyric = null;
 	private String lyricResult = null;
+	private String artistTitle = null;
+	private int idUserActivo = 0;
+	private boolean onOff = false;
 
 	@Inject
 	private ChartLyricsSoap clsoap;
@@ -38,67 +44,84 @@ public class SearchMusicsServer implements Serializable {
 	@Inject
 	private UserInput ui;
 
-	private int idUserActivo;
-	private boolean onOff;
-
-	// private void (int idMusica) {
-	//
-	// this.artist = artist;
-	// this.title = title;
-	//
-	// }
-
-	// falta ver se o user ja tem esta letra guardada
-
 	public void renderOFF() {
 		setOnOff(false);
 
 	}
 
+	// public void concatArtisTitle() {
+	// setArtistTitle("Artist: \"" + artist + "\"  &  Song: \"" + title + "\"");
+	// }
+
 	public void searchLyrics(String artist, String title, int idMusica) {
-		this.idUserActivo = ui.getActiveUser().getIdUtilizador();
-		this.idMusica = idMusica;
-		this.artist = artist;
-		this.title = title;
+		setLyricResult(null);
+		setArtist(artist);
+		setTitle(title);
+		setIdMusica(idMusica);
+		setIdUserActivo(ui.getActiveUser().getIdUtilizador());
+		setArtistTitle("Artist: \"" + this.artist + "\"  &  Song: \""
+				+ this.title + "\"");
 
 		List<Lyric> list = ld.findLyricsByUser(idUserActivo);
-		if (list.size() != 0) {
-			for (int i = 0; i < list.size(); i++) {
-				if (list.get(i).getUtilizador().getIdUtilizador() == idUserActivo
-						&& list.get(i).getMusica().getIdMusic() == idMusica) {
-					setLyricResult(list.get(i).getLyric());
-				} else {
+		// System.out.println(list.size());
+		try {
+			if (list.isEmpty()) {
+				searchL(artist, title);
+				// System.out.println("entre1");
+			} else {
+				for (Lyric l : list) {
+					if ((l.getUtilizador().getIdUtilizador() == this.idUserActivo)
+							&& (l.getMusica().getIdMusic() == this.idMusica)) {
+						setLyricResult(l.getLyric());
+						log.info("Music founded in DB.");
+					}
+				}
+				if (lyricResult == null) {
 					searchL(artist, title);
+					// System.out.println("entre2");
 				}
 			}
-		} else {
-			searchL(artist, title);
+
+			setOnOff(true);
+		} catch (Exception e) {
+
+			log.error("An error ocurred in the search: " + e.getMessage());
 		}
-
-		// System.out.println(getLyricResult());
-
-		setOnOff(true);
 
 	}
 
 	public void searchL(String artist, String title) {
-
-		lyric = clsoap.searchLyrics(artist, title);
-		if (lyric != null) {
-			setLyricResult(lyric);
-		} else {
-			// setLyricResult("Não foi encontrada a letra no soap do chart");
-			lyric = clrest.searchLyrics(artist, title);
-			if (lyric != null) {
+		try {
+			lyric = clsoap.searchLyrics(artist, title);
+			if (lyric != null && !lyric.isEmpty()
+					&& !lyric.equalsIgnoreCase("NOT FOUND")) {
 				setLyricResult(lyric);
+				log.info("Lyric found in the service Soap by ChartLyrics");
 			} else {
-				// setLyricResult("Não foi encontrada a letra no rest d chart");
-				lyric = lwrest.searchLyrics(artist, title);
-				if (lyric != null) {
+				lyric = clrest.searchLyrics(artist, title);
+				if (lyric != null && !lyric.isEmpty()
+						&& !lyric.equalsIgnoreCase("NOT FOUND")) {
 					setLyricResult(lyric);
+					log.info("Lyric found in the service Rest by ChartLyrics");
 				} else {
-					setLyricResult("Não foi encontrada a letra em nenhum dos servidores");
+					lyric = lwrest.searchLyrics(artist, title);
+					if (lyric != null && !lyric.isEmpty()
+							&& !lyric.equalsIgnoreCase("NOT FOUND")) {
+						setLyricResult(lyric);
+						log.info("Lyric found in de service Rest by WikiaLyrics");
+					} else {
+
+						setLyricResult("Não foi encontrada a letra em nenhum dos servidores");
+						log.info("Lyric not found");
+					}
 				}
+			}
+		} catch (Exception e) {
+			if (e.getMessage() == null) {
+				setLyricResult("Não foi encontrada a letra em nenhum dos servidores");
+				log.info("Lyric not found");
+			} else {
+				log.error("An error ocurred in the search: " + e.getMessage());
 			}
 		}
 	}
@@ -149,6 +172,22 @@ public class SearchMusicsServer implements Serializable {
 
 	public void setOnOff(boolean onOff) {
 		this.onOff = onOff;
+	}
+
+	public String getArtistTitle() {
+		return artistTitle;
+	}
+
+	public void setArtistTitle(String artistTitle) {
+		this.artistTitle = artistTitle;
+	}
+
+	public int getIdUserActivo() {
+		return idUserActivo;
+	}
+
+	public void setIdUserActivo(int idUserActivo) {
+		this.idUserActivo = idUserActivo;
 	}
 
 }

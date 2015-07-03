@@ -38,35 +38,27 @@ public class ChartLyricsSoap {
 				setLyricresult(result.getLyric());
 				setArtist(result.getLyricArtist());
 				setSong(result.getLyricSong());
-				System.out.println(artist);
+				// System.out.println(artist);
 				search = true;
 
 			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
+
 				// e.printStackTrace();
-				System.out.println("Connecting chartLyrics by soap...");
+				// System.out.println("Connecting chartLyrics by soap...");
 				count++;
 
 			}
 
 		}
 		return getLyricresult();
-		// System.out.println("Artist: " + result.getLyricArtist());
-		// System.out.println("Song: " + result.getLyricSong());
-		//
-		// System.out.println("Lyric: \n" + result.getLyric());
-
-		// return lyricresult;
 
 	}
 
 	public String getLyricresult() {
-		// System.out.println(lyricresult);
 		return lyricresult;
 	}
 
 	public void setLyricresult(String lyricresult) {
-		// System.out.println(lyricresult);
 
 		this.lyricresult = lyricresult;
 	}

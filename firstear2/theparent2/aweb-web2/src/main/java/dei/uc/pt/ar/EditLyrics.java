@@ -3,14 +3,23 @@ package dei.uc.pt.ar;
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @SessionScoped
 @Named
 public class EditLyrics implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private static final Logger log = LoggerFactory.getLogger(EditLyrics.class
+			.getName());
+
+	private FacesMessage msg = null;
 
 	@Inject
 	private SearchMusicsServer sms;
@@ -27,16 +36,17 @@ public class EditLyrics implements Serializable {
 	@Inject
 	private SaveLyric sl;
 
-	private int idMusica;
-	private int idUserActivo;
-	private String lyricEdited;
+	private int idMusica = 0;
+	private int idUserActivo = 0;
+	private String lyricEdited = null;
+	private String artistTitle = null;
 
 	public String lyricToEdit() {
 
 		this.idMusica = sms.getIdMusica();
 		this.idUserActivo = ui.getActiveUser().getIdUtilizador();
 		this.lyricEdited = sms.getLyricResult();
-
+		this.artistTitle = sms.getArtistTitle();
 		return "editLyrics.xhtml?redirect=true";
 	}
 
@@ -45,9 +55,14 @@ public class EditLyrics implements Serializable {
 			Utilizador utilizador = ud.findUserById(this.idUserActivo);
 			Musica musica = md.getMusic(idMusica);
 			Lyric l = new Lyric(this.lyricEdited, utilizador, musica);
-			sl.saveL(l);
+			msg = new FacesMessage(sl.saveL(l), "ERROR MSG");
+			if (FacesContext.getCurrentInstance() != null)
+				FacesContext.getCurrentInstance().addMessage(null, msg);
+			log.info("Edited Lyric saved");
 		} catch (Exception e) {
-			System.out.println(e);
+			// System.out.println(e);
+			log.error("An error ocurred when saving edited lyrics: "
+					+ e.getMessage());
 		}
 	}
 
@@ -73,6 +88,14 @@ public class EditLyrics implements Serializable {
 
 	public void setLyricEdited(String lyricEdit) {
 		this.lyricEdited = lyricEdit;
+	}
+
+	public String getArtistTitle() {
+		return artistTitle;
+	}
+
+	public void setArtistTitle(String artistTitle) {
+		this.artistTitle = artistTitle;
 	}
 
 }

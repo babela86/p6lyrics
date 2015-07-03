@@ -44,14 +44,14 @@ public class LyricsWikiaRest {
 				lyrics = result.readEntity(GetLyricsWikia.class).getLyric();
 				setLyricresult(lyrics);
 				// System.out.println(lyrics);
-				System.out.println(artist);
+				// System.out.println(artist);
 
 				setLyricresult(lyrics);
 
 				search = true;
 			} catch (Exception e) {
-				System.out.println("Connecting wikiaLyrics by rest...");
-				System.out.println(count);
+				// System.out.println("Connecting wikiaLyrics by rest...");
+				// System.out.println(count);
 				count++;
 
 			}

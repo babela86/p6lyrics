@@ -17,16 +17,15 @@
 			
 				<h:form>
 				<h:panelGroup>
-					<h:inputTextarea value="#{editLyrics.lyricEdited}" style="width:80%;height:400px;padding:7px;" />
+					<h:outputText value="#{editLyrics.artistTitle}" class="artistTitle"/><br/>
+					<h:inputTextarea value="#{editLyrics.lyricEdited}" style="width:80%;height:400px;padding:7px;" required="true" requiredMessage="  The lyric cannot be empty!!!" id="emptyError"/>
 				<br/>
-				<h:commandButton class="btnTabs" action="#{editLyrics.saveLyric()}" value="Save" />
-								
+				<h:commandButton class="btnTabs" action="#{editLyrics.saveLyric()}" value="Save" />	
 				
 				</h:panelGroup>
 				
 				</h:form>
-				
-				
+			
 			</div>
 			<div class="messageColor">
 				<br />

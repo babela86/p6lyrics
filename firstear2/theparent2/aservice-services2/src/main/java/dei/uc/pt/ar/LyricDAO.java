@@ -27,13 +27,12 @@ public class LyricDAO {
 	public boolean updateLyrics(String l, int idL) {
 		try {
 			q = em.createQuery("UPDATE Lyric SET lyric =:ly WHERE idLyric = :idL");
-			System.out.println(l);
+
 			q.setParameter("ly", l);
 			q.setParameter("idL", idL);
 			q.executeUpdate();
 			return true;
 		} catch (Exception e) {
-			// System.out.println(e);
 			return false;
 		}
 

@@ -45,13 +45,13 @@ public class ChartLyricsRest {
 				lyrics = result.readEntity(GetLyricsChart.class).getLyric();
 				setLyricresult(lyrics);
 				// System.out.println(lyrics);
-				System.out.println(artist);
+				// System.out.println(artist);
 
 				setLyricresult(lyrics);
 
 				search = true;
 			} catch (Exception e) {
-				System.out.println("Connecting to chartLyrics by rest...");
+				// System.out.println("Connecting to chartLyrics by rest...");
 
 				count++;
 			}

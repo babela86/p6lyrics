@@ -168,7 +168,7 @@ body {
 .popup, .closebtn {
 	/*transition: all 200ms;*/
 	text-decoration: none;
-	text-align: justify;
+	/*text-align: justify;*/
 	z-index: 505;
 }
 
@@ -192,4 +192,10 @@ body {
 	width: 90%;
 	height: 100%;
 	background: #F3F5F7;
+}
+.artistTitle{
+	color: #3A4856;
+	text-align: center;
+	font-weight: bold;
+	
 }

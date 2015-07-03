@@ -23,7 +23,7 @@
 			<h:form prependId="false">
 				<div class="col-sm-1" />
 				<div class="col-sm-4">
-					<p id="sign">Sign up</p>
+					<p id="sign">Sign in</p>
 					<h:panelGrid class="panelGrid" columns="2" layout="grid">
 						<h:outputText value="E-mail" />
 						<h:inputText value="#{userInput.email}" required="true"
@@ -33,7 +33,7 @@
 							requiredMessage="Insert a password" />
 					</h:panelGrid>
 					<h:panelGrid class="panelGrid">
-						<h:commandButton class="btnSign" value="Sign up"
+						<h:commandButton class="btnSign" value="Sign in"
 							action="#{userInput.loginUser()}" />
 					</h:panelGrid>
 				</div>
@@ -42,7 +42,7 @@
 
 			<h:form>
 				<div class="col-sm-4">
-					<p id="sign">Sign in</p>
+					<p id="sign">Sign up</p>
 					<h:panelGrid class="panelGrid" columns="2" layout="grid">
 						<h:outputText value="E-mail" />
 						<h:inputText value="#{userInput.email}" required="true" />
@@ -67,7 +67,7 @@
 							maxlength="4" size="2" />
 					</h:panelGrid>
 					<h:panelGrid class="panelGrid">
-						<h:commandButton class="btnSign" value="Sign in"
+						<h:commandButton class="btnSign" value="Sign up"
 							action="#{userInput.newUser()}" />
 						<div class="messageColor">
 							<br />
