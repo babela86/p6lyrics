@@ -20,8 +20,6 @@ import dei.uc.pt.ar.UserDAO;
 import dei.uc.pt.ar.UserRegister;
 import dei.uc.pt.ar.Utilizador;
 import dei.uc.pt.ar.paj.pojo.CountRest;
-import dei.uc.pt.ar.paj.pojo.PlaylistRest;
-import dei.uc.pt.ar.paj.pojo.StringRest;
 import dei.uc.pt.ar.paj.pojo.UserCollection;
 import dei.uc.pt.ar.paj.pojo.UserRest;
 

@@ -1,7 +1,5 @@
 package dei.uc.pt.ar.paj;
 
-import java.util.List;
-
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -15,7 +13,6 @@ import dei.uc.pt.ar.MusicDAO;
 import dei.uc.pt.ar.paj.pojo.CountRest;
 import dei.uc.pt.ar.paj.pojo.MusicCollection;
 import dei.uc.pt.ar.paj.pojo.MusicRest;
-import dei.uc.pt.ar.paj.conversion.ConvertMusic;
 
 @Stateless
 @Path("/musics")
