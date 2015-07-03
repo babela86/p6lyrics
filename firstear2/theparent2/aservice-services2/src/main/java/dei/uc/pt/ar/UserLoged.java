@@ -2,8 +2,6 @@ package dei.uc.pt.ar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped

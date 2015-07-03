@@ -93,6 +93,8 @@ public class UserDAO {
 	}
 	
 	public boolean deleteAccountByUserID(int userid) {
+		//System.out.println("eliminar "+userid);
+		log.info("eliminar "+userid);
 		try {
 			q = em.createQuery("UPDATE Musica m SET m.utilizador =1 WHERE m.utilizador.idUtilizador =:userid");
 			q.setParameter("userid", userid);
@@ -100,14 +102,22 @@ public class UserDAO {
 			@SuppressWarnings("unchecked")
 			ArrayList<Playlist> lista = (ArrayList<Playlist>) em.createQuery(
 				"SELECT p FROM Playlist p WHERE p.utilizador.idUtilizador = :id")
-				.setParameter("id", userid);
+				.setParameter("id", userid).getResultList();
 			for (Playlist p : lista) {
 				em.remove(em.merge(p));
 			}
+			
+			//apagar roles pelo user id
+	    	em.createQuery("delete from Roles r where r.utilizador.idUtilizador = :id").
+	    	setParameter("id", userid ).executeUpdate();
+			
+	    	//apagar lyrics pelo user id
+	    	em.createQuery("delete from Lyric l where l.utilizador.idUtilizador = :id").
+	    	setParameter("id", userid ).executeUpdate();
 
 			Utilizador uact = (Utilizador) em.createQuery(
 				"SELECT u FROM Utilizador u WHERE u.idUtilizador = :id")
-				.setParameter("id", userid);
+				.setParameter("id", userid).getSingleResult();
 			em.remove(em.merge(uact));
 			
 			log.info("Dados da conta apagados!");

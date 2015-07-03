@@ -100,8 +100,10 @@ public class SimpleUserService {
 	// Remover user por id
 	@GET
 	@Path("/delete/{userId}")
-	@Produces(MediaType.APPLICATION_XML)
-	public Response removeUserById(@PathParam("userId") int id) {
+
+	//@Produces(MediaType.APPLICATION_XML)
+	public Response removeUserById(@PathParam("userId") int id){		
+
 		boolean removed = ud.deleteAccountByUserID(id);
 		if (removed)
 			return Response.ok().build();
@@ -119,13 +121,16 @@ public class SimpleUserService {
 
 	// Alterar password
 	@POST
-	@Path("/changepass/{utilId}")
-	@Consumes({ MediaType.APPLICATION_XML })
-	@Produces({ MediaType.APPLICATION_XML })
-	public Response changePass(@PathParam("utilId") int id, String newpwd) {
-		if (ud.changePassword(newpwd, id)) {
-			return Response.ok(ud.findUserById(id)).build();
-		} else {
+
+	
+
+	@Path("/changepassword")
+	@Consumes({MediaType.APPLICATION_XML})
+	public Response changeUserPass(UserRest user) throws NoSuchAlgorithmException, UnsupportedEncodingException, ParseException{
+		if ( ud.changePassword( user.getPassword(), user.getIdUtilizador()) ) {
+			return Response.ok(200).build();
+		}else{
+
 			return Response.notModified().build();
 		}
 	}

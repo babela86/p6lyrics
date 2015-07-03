@@ -64,7 +64,7 @@ public class ChartLyricsSoap {
 	}
 
 	public String getArtist() {
-		System.out.println(artist);
+		//System.out.println(artist);
 		return artist;
 	}
 
@@ -74,7 +74,7 @@ public class ChartLyricsSoap {
 	}
 
 	public String getSong() {
-		System.out.println(song);
+		//System.out.println(song);
 		return song;
 	}
 
