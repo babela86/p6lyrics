@@ -15,9 +15,8 @@ import org.junit.Test;
 
 public class SimpleMusicServiceTest {
 
-	private static URI uri = UriBuilder
-			.fromUri("http://localhost:8080/thews-ws2/rest/musics").port(9001)
-			.build();
+	private static URI uri = UriBuilder.fromUri(
+			"http://localhost:8080/thews-ws2/rest/musics").build();
 
 	// http://localhost:9001/thews-ws2/rest/musics
 
@@ -39,6 +38,7 @@ public class SimpleMusicServiceTest {
 		c.close();
 	}
 
+	@Ignore
 	@Test
 	public void getAllMusicsTestNotOK() {
 		Client c = ClientBuilder.newClient();
@@ -51,12 +51,13 @@ public class SimpleMusicServiceTest {
 	@Test
 	public void getMusicsFromUserIdOK() {
 		Client c = ClientBuilder.newClient();
-		Response r = c.target(uri + "/fromuser/2")
+		Response r = c.target(uri + "/fromuser/3")
 				.request(MediaType.APPLICATION_XML).get();
 		assertEquals(Response.Status.OK, r.getStatusInfo());
 		c.close();
 	}
 
+	//
 	@Ignore
 	@Test
 	public void getPMusicsFromUserIdNotOK() {
@@ -85,4 +86,41 @@ public class SimpleMusicServiceTest {
 		c.close();
 	}
 
+	@Test
+	public void testDeleteMusicOK() {
+		Client c = ClientBuilder.newClient();
+		Response r = c.target(uri + "/delete/15")
+				.request(MediaType.APPLICATION_XML).get();
+		assertEquals(Response.Status.OK, r.getStatusInfo());
+		c.close();
+	}
+
+	//
+	@Ignore
+	@Test
+	public void testDeleteNotMusic() {
+		Client c = ClientBuilder.newClient();
+		Response r = c.target(uri + "/delete/10")
+				.request(MediaType.APPLICATION_XML).get();
+		assertEquals(Response.Status.INTERNAL_SERVER_ERROR, r.getStatusInfo());
+		c.close();
+	}
+
+	@Test
+	public void addToPlaylistByIdOK() {
+		Client c = ClientBuilder.newClient();
+		Response r = c.target(uri + "/add/20/toplaylist/10")
+				.request(MediaType.APPLICATION_XML).get();
+		assertEquals(Response.Status.OK, r.getStatusInfo());
+		c.close();
+	}
+
+	@Test
+	public void removefromPlaylistByIdOK() {
+		Client c = ClientBuilder.newClient();
+		Response r = c.target(uri + "/remove/20/fromplaylist/10")
+				.request(MediaType.APPLICATION_XML).get();
+		assertEquals(Response.Status.OK, r.getStatusInfo());
+		c.close();
+	}
 }
