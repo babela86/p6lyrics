@@ -10,15 +10,15 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class SimpleUserServiceTest {
 
-	private static URI uri = UriBuilder
-			.fromUri("http://localhost:8080/thews-ws2/rest/users").port(9001)
-			.build();
+	private static URI uri = UriBuilder.fromUri(
+			"http://localhost:8080/thews-ws2/rest/users").build();
 
-	// http://localhost:9001/thews-ws2/rest/users/number/
+	// http://localhost:8080/thews-ws2/rest/users/number/
 
 	@Test
 	public void userListTestCount() {
@@ -71,6 +71,26 @@ public class SimpleUserServiceTest {
 		Response r = c.target(uri + "/listlogedusers")
 				.request(MediaType.APPLICATION_XML).get();
 		assertEquals(Response.Status.OK, r.getStatusInfo());
+		c.close();
+	}
+
+	//
+	@Ignore
+	@Test
+	public void testDeleteUserOK() {
+		Client c = ClientBuilder.newClient();
+		Response r = c.target(uri + "/delete/3")
+				.request(MediaType.APPLICATION_XML).get();
+		assertEquals(Response.Status.OK, r.getStatusInfo());
+		c.close();
+	}
+
+	@Test
+	public void testDeleteWrongUser() {
+		Client c = ClientBuilder.newClient();
+		Response r = c.target(uri + "/delete/20")
+				.request(MediaType.APPLICATION_XML).get();
+		assertEquals(Response.Status.NOT_MODIFIED, r.getStatusInfo());
 		c.close();
 	}
 

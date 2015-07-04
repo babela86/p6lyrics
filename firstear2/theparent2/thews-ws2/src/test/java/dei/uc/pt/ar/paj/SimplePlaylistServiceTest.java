@@ -15,11 +15,11 @@ import org.junit.Test;
 
 public class SimplePlaylistServiceTest {
 
-	private static URI uri = UriBuilder
-			.fromUri("http://localhost:8080/thews-ws2/rest/playlists")
-			.port(9001).build();
+	private static URI uri = UriBuilder.fromUri(
+			"http://localhost:8080/thews-ws2/rest/playlists").build();
 
-	// http://localhost:9001/thews-ws2/rest/playlists/
+	// http://localhost:8080/thews-ws2/rest/playlists/
+
 	@Test
 	public void playlistListTestCount() {
 		Client c = ClientBuilder.newClient();
@@ -56,6 +56,7 @@ public class SimplePlaylistServiceTest {
 		c.close();
 	}
 
+	//
 	@Ignore
 	@Test
 	public void getPlaylistFromUserIdNotOK() {
@@ -69,7 +70,7 @@ public class SimplePlaylistServiceTest {
 	@Test
 	public void getPlaylistByIdOK() {
 		Client c = ClientBuilder.newClient();
-		Response r = c.target(uri + "/list/9")
+		Response r = c.target(uri + "/list/10")
 				.request(MediaType.APPLICATION_XML).get();
 		assertEquals(Response.Status.OK, r.getStatusInfo());
 		c.close();
