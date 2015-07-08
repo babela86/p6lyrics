@@ -27,7 +27,6 @@
 	<!-- Added by JPM -->
 	<login-config>
         <auth-method>FORM</auth-method>
-        <realm-name>p6lyricsDomain</realm-name>
         <form-login-config>
             <form-login-page>/index.xhtml?faces-redirect=true</form-login-page>
             <form-error-page>/resources/loginerror.xhtml</form-error-page>
